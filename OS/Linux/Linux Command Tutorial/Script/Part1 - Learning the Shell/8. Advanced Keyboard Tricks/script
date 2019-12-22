@@ -1,0 +1,93 @@
+$ clear – Clear the screen
+$ history – Display the contents of the history list
+
+* Command Line Editing
+    bash uses a library (a shared collection of routines that different programs can use) 
+        called Readline to implement command line editing.
+    Note: Some of the key sequences below (particularly those which use the Alt key)may be 
+        intercepted by the GUI for other functions. All of the key sequences shouldwork properly 
+        when using a virtual console
+    
+    * Cursor Movement
+        Table 8-1: Cursor Movement 
+            CommandsKey         Action
+            Ctrl-a          Move cursor to the beginning of the line.
+            Ctrl-e          Move cursor to the end of the line.
+            Ctrl-f          Move cursor forward one character; same as the right arrow key.
+            Ctrl-b          Move cursor backward one character; same as the left arrow key.
+            Alt-f           Move cursor forward one word.
+            Alt-b           Move cursor backward one word.
+            Ctrl-l          Clear the screen and move the cursor to the top left corner. The clear command does the same thin
+
+    * Modifying Text
+        Table 8-2: Text Editing Commands
+            Key                 Action
+            Ctrl-d          Delete the character at the cursor location
+            Ctrl-t          Transpose (exchange) the character at the cursor location with the one preceding it.
+            Alt-t           Transpose the word at the cursor location with the one preceding it.
+            Alt-l           Convert the characters from the cursor location to the end of the word to lowercase.
+            Alt-u           Convert the characters from the cursor location to the end of the word to uppercas
+
+    * Cutting And Pasting
+        The Readline documentation uses the terms killing and yanking to refer to what 
+        we would commonly call cutting and pasting. Items that are cut are stored in a 
+        buffer called the killring
+        Table 8-3: Cut And Paste Commands
+            Key                 Action
+            Ctrl-k          Kill text from the cursor location to the end of line.
+            Ctrl-u          Kill text from the cursor location to the beginning of the line.
+            Alt-d           Kill text from the cursor location to the end of the current word.
+            Alt-Backspace   Kill text from the cursor location to the beginning of the current word. If the cursor is 
+                                at the beginning of a word, kill the previous word.
+            Ctrl-y          Yank text from the kill-ring and insert it at the cursor location.
+
+        NOTE: ALT work, which special key: (Fn key)
+
+* Completion
+    Tab key to complete the command 
+    Table 8-4: Completion Commands
+        Key                     Action
+        Alt-?               Display list of possible completions. On most systems you can also 
+                                do this by pressing the tab key a second time, which is much easier.
+        Alt-*               Insert all possible completions. This is useful when you want to use 
+                                more than one possible matc
+* Using History
+    This list of commands is kept in your home directory in a file called ".bash_history".
+    $ history | grep /usr/bin
+    $ !564 => view cmd history 
+    Ctrl-r: open search history bash
+        Enter: To execute that history cmd
+        Ctrl-j: To copy command to terminal
+    
+    Table 8-5: History Commands
+        Key                     Action
+        Ctrl-p              Move to the previous history entry. Same action as the up arrow.
+        Ctrl-n              Move to the next history entry. Same action as the down arrow.
+        Alt-<               Move to the beginning (top) of the history list.
+        Alt->               Move to the end (bottom) of the history list, i.e., the current command line.
+        Ctrl-r              Reverse incremental search. Searches incrementally from the current command line up the history list.
+        Alt-p               Reverse search, non-incremental. With this key, type in the search string and press enter before the search is performed.
+        Alt-n               Forward search, non-incremental.
+        Ctrl-o              Execute the current item in the history list and advance to the 
+                                next one. This is handy if you are trying to re-execute a sequence 
+                                of commands in the history list
+        
+    * History Expansion
+        The shell offers a specialized type of expansion for items in the history list by 
+            using the“!” character. We have already seen how the exclamation point can be 
+            followed by anumber to insert an entry from the history list. 
+            There are a number of other expansion feature
+
+        Table 8-6: History Expansion Commands
+            Sequence                Action
+            !!                  Repeat the last command. It is probably easier to press up arrow andenter.
+            !number             Repeat history list item number.
+            !string             Repeat last history list item starting with string. 
+            !?string            Repeat last history list item containing string.
+
+        !!NOTE: I would caution against using the “!string” and “!?string” forms unless you are absolutel 
+                sure of the contents of the history list item
+            
+
+
+        
