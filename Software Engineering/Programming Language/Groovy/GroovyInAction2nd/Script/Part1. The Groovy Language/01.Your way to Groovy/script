@@ -1,0 +1,105 @@
+This chapter covers
+■ What Groovy is all about
+■ How it makes your programming life easier
+■ How to start
+
+Groovy brings the power of advanced language features such as closures, dynamic methods, and the Meta Object Protocol
+(MOP) to the Java platform. 
+
+1.1. The Groovy Story.
+    1.1.1. What is Groovy 
+        Groovy is an optionally typed, dynamic language for the Java platform with many features that are inspired 
+            by languages like Python, Ruby, and Smalltalk,
+        it’s designed as a companion to, not a replacement for, Java.
+        It can be precompiled into Java bytecode, integrated into Java applications, power web applications,
+            add an extra degree of control within build files, and be the basis of whole applications on its own. 
+            Groovy, obviously, is too flexible to be pigeonholed
+        Groovy is there for “extending the reach of Java.”
+
+    1.1.2 Playing nicely with Java: seamless integration
+        Being Java friendly means two things: 
+            + seamless integration with the Java Runtime Environment
+            + having a syntax that’s aligned with Java.
+
+        it runs inside the JVM and makes use of Java’s libraries (together called the Java
+            Runtime Environment, or JRE).
+
+        calling Java from Groovy is a nonissue.
+        Every Groovy type is a subtype of java.lang.Object.
+            A Groovy date is a java.util.Date. You can call all methods on it that you know are
+                available for a Date.
+        Suppose a Groovy class MyGroovyClass is compiled into MyGroovyClass.class and put on the classpath. You
+                can use this Groovy class from within a Java class by typing 
+                new MyGroovyClass(); // create from Java
+
+        what degree this applies: calls into Java, calls from Java, bidirectional compilation,
+            inheritance intermix, mutual class substitutability, and tool support.  
+
+        Example syntax:
+            import java.util.*; // Java
+            Date today = new Date(); // Java
+            today = new Date() // Groovy
+            require 'date' # Ruby 
+            today = Date.new # Ruby
+            import java.util._ // Scala
+            var today = new Date // Scala
+            (import '(java.util Date)) ; Clojure
+            (def today (new Date)) ; Clojure
+            (def today (Date.)) ; Clojure alternative
+
+    1.1.3 Power in your code: a feature-rich language
+        Groovy has three main enhancements over and above those of
+            Java: language features, libraries specific to Groovy, and additions to the existing Java
+            standard classes (known as the Groovy Development Kit, or GDK). 
+
+            Example package
+                def classes = [String, List, File]
+                for (clazz in classes) {
+                    println clazz.package.name
+                }
+            which prints
+                java.lang 
+                java.util 
+                java.io
+
+    1.1.4 Community driven but corporate backed
+
+1.2 What Groovy can do for you
+    1.2.1 Groovy for the busy Java professional
+    1.2.2 Groovy for the polyglot programmer
+    1.2.3 Groovy for pragmatic programmers, extremos, and agilists
+        These range from simple build automation, continuous integration
+            (CI), and reporting, up to automated documentation, shipment, and installation.    
+
+1.3 Running Groovy
+    Table 1.1 Commands to execute Groovy
+        Command         What it does
+        groovy          Starts the processor that executes Groovy scripts. Single-line Groovy scripts 
+                            can be specified as command-line arguments.
+        groovysh        Starts the groovysh command-line shell, used to execute Groovy code interactively. By entering statements or whole scripts line by line into the shell, 
+                            code is executed on the fly.
+        groovyConsole   Starts a graphical interface that’s used to execute Groovy code interactively; 
+                            moreover, groovyConsole loads and runs Groovy script files.
+
+    1.3.1 Using groovysh for a welcome message
+        $ "Welcome, " + System.properties."user.name"
+    1.3.2 Using groovyConsole
+        Tool edit and run groovy script 
+    1.3.3 Using the groovy command
+        The groovy command is used to execute Groovy programs and scripts. 
+
+1.4 Compiling and running Groovy
+    1.4.1 Compiling Groovy with groovyc
+        The groovyc compiler generates at least one class file for each Groovy source file compiled.
+        $ groovyc -d classes Gold.groovy
+        
+        For each script, Groovy generates a class that extends groovy.lang.Script, which
+            contains a main method so that Java can execute it.      
+
+1.5 Groovy IDE and editor support
+    1.5.1 IntelliJ IDEA plug-in
+    1.5.2 NetBeans IDE plug-in
+    1.5.3 Eclipse plugin
+    1.5.4 Groovy support in other editors
+
+1.6 Summary

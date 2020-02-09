@@ -1,0 +1,208 @@
+This chapter covers
+■ What Groovy code looks like
+■ Quickstart examples
+■ Groovy’s dynamic nature
+
+2.1 General code appearance
+    2.1.1 Commenting Groovy code 
+        #!/usr/bin/env groovy 
+        // some line comment 
+        /* some multi
+            line comment */
+        Here are some guidelines for writing comments in Groovy: 
+            ■ The #! shebang comment is allowed only in the first line. The shebang allows
+                UNIX shells to locate the Groovy bootstrap script and run code with it. 
+            ■ // denotes single-line comments that end with the current line. 
+            ■ Multiline comments are enclosed in /* ... */ markers. 
+            ■ Javadoc-like comments in /** ... */ markers are treated the same as other
+                multiline comments, but are processed by the groovydoc Ant task. 
+    2.1.2 Comparing Groovy and Java syntax 
+        Groovy currently doesn’t support multiple initialization and iteration statements 
+            in the classic for(init1,init2;test;inc1,inc2) loop.      
+        
+        Beside those subtle differences, the overwhelming majority of Java’s syntax is part
+            of the Groovy syntax. This applies to:
+            ■ The general packaging mechanism. 
+            ■ Statements (including package and import statements). 
+            ■ Class, interface, enum, field, and method definitions including nested classes,
+                except for special cases with nested class definitions inside methods or other
+                deeply nested blocks. 
+            ■ Control structures. 
+            ■ Operators, expressions, and assignments. 
+            ■ Exception handling. 
+            ■ Declaration of literals, with the exception of literal array initialization where the
+                Java syntax would clash with Groovy’s use of braces. Groovy uses a shorter
+                bracket notation for declaring lists instead. 
+            ■ Object instantiation, referencing and dereferencing objects, and calling methods. 
+            ■ Declaration and use of generics and annotations. 
+        
+        The added value of Groovy’s syntax includes the following:
+            ■ Ease access to Java objects through new expressions and operators. 
+            ■ Allow more ways of creating objects using literals. 
+            ■ Provide new control structures to allow advanced flow control. 
+            ■ Use annotations to generate invisible code, the so-called AST transformations
+                that are described in chapter 9.
+            ■ Introduce new datatypes together with their operators and expressions. 
+            ■ A backslash at the end of a line escapes the line feed so that the statement can
+                proceed on the following line. 
+            ■ Additional parentheses force Groovy to treat the enclosed content as an expression. We’ll use this feature in section 4.3 when we cover more of the details
+                about maps.
+
+    2.1.3 Beauty through brevity 
+        Compare the Java and Groovy code for encoding a string for use in a URL. 
+            For Java: 
+                java.net.URLEncoder.encode("a b", "UTF-8"); 
+            For Groovy: 
+                URLEncoder.encode 'a b', 'UTF-8'
+        The support for optional parentheses is based on the disambiguation and precedence 
+            rules as summarized in the Groovy Language Specification (GLS).
+
+        Groovy automatically imports the packages groovy.lang.*, groovy.util.*,
+            java.lang.*, java.util.*, java.net.*, and java.io.*, as well as the classes
+            java.math.BigInteger and BigDecimal.
+        
+        There are other elements of syntax that are optional in Groovy too: 
+            ■ In chapter 7, we’ll talk about optional return statements. 
+            ■ Even the ubiquitous dot becomes optional when the chaining method is called.
+                For example, in combination with optional parentheses, the following code is
+                legal in Groovy: buy best of stocks, which is short for buy(best).of(stocks).
+                Chapter 7 has the full description of these so-called command chains.
+            ■ Where Java demands type declarations, they either become optional in Groovy or
+                can be replaced by def to indicate that you don’t care about the type. 
+            ■ Groovy makes type casts optional. 
+            ■ You don’t need to add the throws clause to your method signature when your
+                method potentially throws a checked exception. 
+
+2.2 Probing the language with assertions 
+2.3 Groovy at a glance 
+    2.3.1 Declaring classes 
+        Note that everything looks much like Java, except there’s no accessibility modifier: 
+            methods are public by default.
+
+    2.3.2 Using scripts 
+        Scripts contain Groovy statements without an enclosing class declaration. Scripts
+            can even contain method definitions outside of class definitions to better structure the
+            code.
+
+        Example:
+            Book gina = new Book('Groovy in Action') 
+            assert gina.getTitle() == 'Groovy in Action' 
+            assert getTitleBackwards(gina) == 'noitcA ni yvoorG' 
+            String getTitleBackwards(book) { 
+                String title = book.getTitle() 
+                return title.reverse() 
+            }
+        -> able to invoke the method getTitleBackwards before it’s declared.
+        -> A Groovy script is fully constructed—that is, parsed, compiled, 
+            and generated—before execution.
+        -> Another important observation is that you can use Book objects without explicitly 
+                compiling the Book class! The only prerequisite for using the Book class is that
+                Book.groovy must reside on the classpath. The Groovy runtime system will find the
+                file, compile it transparently into a class, and yield a new Book object. Groovy combines 
+                the ease of scripting with the merits of object orientation.
+        
+    2.3.3 GroovyBeans 
+        Groovy facilitates working with beans in three ways: 
+            ■ Generating the accessor methods 
+            ■ Allowing simplified access to all JavaBeans (including GroovyBeans) 
+            ■ Simplifying registration of event handlers together with annotations that declare
+                a property as bindable.
+        Examples: BookGroovyBean.groovy 
+        -> Also note that groovyBook.title is not a field access. Instead, it’s a shortcut for the
+            corresponding accessor method.
+    2.3.4 Annotations
+        Groovy also uses annotations to mark code structures for special compiler handling.
+        A Groovy bean can be marked as immutable, which means that the class becomes
+            final, all its fields become final, and you cannot change its state after construction
+            @Immutable. 
+        Examples: FixedBookAnnotation.groovy 
+        -> Immutable types are always helpful for a clean design but they’re indispensable for
+            concurrent programming: an increasingly important topic.
+        
+        * AST stands for abstract syntax tree
+
+    2.3.5 Using grapes
+        The @Grab annotation is used to explicitly define your external 
+            library dependencies within a script.
+        Exaples: GrabDependencies.groovy 
+        At compile time and runtime that library will be downloaded if needed 
+            and added to the classpath.
+
+    2.3.6 Handling text
+        GSTRINGS
+            In Groovy, string literals can appear in single or double quotes. 
+                The double-quoted version allows the use of placeholders, which are 
+                    automatically resolved as required.
+            Example: GStringLiteral.groovy 
+    
+        REGULAR EXPRESSIONS
+            Groovy supports them at the language level. 
+
+    2.3.7 Numbers are objects
+        They’re first-class objects rather than primitive types. (java.lang.Integer)
+        Examples: Number.groovy
+    
+    2.3.8 Using lists, maps, and ranges
+        LISTS (java.util.List)
+            Example: List.groovy
+
+        SIMPLE MAPS
+            Example: Map.groovy
+        
+        RANGES
+            Example: Range.groovy
+    
+    2.3.9 Code as objects: closures
+        Example: Closures.groovy 
+    2.3.10 Groovy control structures
+        In conditionals, null is treated like false, and so are empty strings, collections,
+            and maps. The for loop has a notation, where x can be anything that Groovy knows 
+            how to iterate through, such as an iterator, an enumeration, a collection, 
+            a range, a map—or literally any object.
+
+2.4 Groovy’s place in the Java environment        
+    2.4.1 My class is your class
+        Behind the scenes, all Groovy code runs inside the JVM, and follows Java’s 
+            object model. Regardless of whether you write Groovy classes or scripts, 
+            they run as Java classes inside the JVM. 
+        You can run Groovy classes inside the JVM in two ways: 
+            ■ You can use groovyc to compile *.groovy files to Java *.class files, put them on
+            Java’s classpath, and retrieve objects from those classes via the Java classloader. 
+            ■ You can work with *.groovy files directly and retrieve objects from those
+            classes via the Groovy classloader. In this case, no *.class files are generated,
+            but rather class objects—that is, instances of java.lang.Class. In other words,
+            when your Groovy code contains the expression new MyClass(), and there’s a
+            MyClass.groovy file, it’ll be parsed, a class of type MyClass will be generated
+            and added to the classloader, and your code will get a new MyClass object as if it
+            had been loaded from a *.class file. (We hope the Groovy programmers will forgive this oversimplification.)
+
+    2.4.2 GDK: the Groovy library
+        This additional functionality is referred to as the GDK, and it provides 
+            significant benefits in consistency, power, and expressiveness
+    
+    2.4.3 Groovy compiler lifecycle
+        Groovy syntax is line-oriented, but the execution of Groovy code is not. Unlike other
+            scripting languages, Groovy code isn’t processed line-by-line in the sense that each
+            line is interpreted separately.  Instead, Groovy code is fully parsed, and a class is 
+            generated from the information that the parser has built. 
+        
+        GROOVY CLASS GENERATION AT WORK
+            Suppose you have a Groovy script stored in a file named MyScript.groovy, and you
+                run it via groovy MyScript.groovy. The following are the class-generation steps, as
+                shown in figure 2.8: 
+                1 The file MyScript.groovy is fed into the Groovy parser. 
+                2 The parser generates an AST that fully represents all the code in the file. 
+                3 The Groovy class generator takes the AST and generates Java bytecode from it.
+                    Depending on the file content, this can result in multiple classes. Classes are
+                    now available through the Groovy classloader. 
+                4 The Java runtime is invoked in a manner equivalent to running java MyScript.
+        
+        GROOVY IS DYNAMIC
+            What makes dynamic languages so powerful is their dynamic method dispatch.
+             Well, the bytecode that the Groovy class generator produces is necessarily different 
+                from what the Java compiler would generate
+
+2.5 Summary
+    
+
+
