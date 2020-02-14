@@ -1,0 +1,7 @@
+** Gardle is an advanced general purpose build management. It is an open source build automation system that builds up on ANT, 
+        Maven and lvy repositories. It supports groovy based Domain Specific Language (DSL) over the XML.
+
+Prerequisites:
+    Gradle is groovy based build automation tool. It is better to have knowledge on java. 
+        If he have knowledge on Groovy is added advantage.
+

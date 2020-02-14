@@ -1,0 +1,7 @@
+task hello
+
+// println hello.name
+// println project.hello.name
+
+println tasks.hello.name
+println tasks['hello'].name

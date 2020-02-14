@@ -1,0 +1,33 @@
+"Gradle is an open source build automation system"
+
+** Ant 
+    Ant and Maven shared considerable success in the JAVA marketplace. 
+    Ant was the first build tool released in 2000 and it is developed based on procedural programming idea. 
+    Later it is improved with an ability to accept plug-ins and dependency management over the network with the help on Apache-IVY. 
+    Main drawback is XML as a format to write build scripts, being hierarchical is not good for 
+        procedural programming, and XML tends to become unmanageably big.
+
+** Maven 
+    Maven is introduced in 2004.
+    It comes with lots improvement then ANT.
+    It changes its structure and it continues using XML for writing build specifications.
+    Maven relies on the conventions and able to download the dependencies over the network.
+    The main benefits of maven is its life cycle. Maven also faces some problems in dependency management.
+    It does not handle well conflicts between versions of the same library and complex 
+        customized build scripts are actually harder to write in maven than in ANT.
+
+** Features of Gradle
+    Declarative builds and build-by-convention
+    Language for dependency based programming
+    Structure your build
+    Deep API
+    Gradle scales
+    Multi-project builds
+    Different ways to manage your builds
+    Gradle is the first build integration tool: Gradle fully supported for your ANT tasks, Maven and lvy repository infrastructure for 
+        publishing and retrieving dependencies. Gradle also provides a converter 
+        for turning a Maven pom.xml to Gradle script.
+    Ease of migration
+    Gradle Wrapper
+    Free open sourc
+    Groovy: Gradle's build script are written in Groovy.

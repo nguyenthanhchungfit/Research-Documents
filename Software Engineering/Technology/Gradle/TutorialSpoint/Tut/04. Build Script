@@ -1,0 +1,69 @@
+Gradle builds a script file for handling two things; 
+    one is projects.
+    another one is tasks.
+
+Every Gradle build represents one or more projects. A project represents a library JAR 
+    or a web application or it might represent a ZIP that assembled from the JARs 
+    produced by other projects. In simple words, a project is made up of different tasks.
+    A task means a piece of work which a build performs.
+    A task might be compiling some classes, creating a JAR, generating Javadoc, or publishing some archives to a repository.
+
+
+Writing Build Script
+Gradle provides a Domain Specific Language (DSL), for describing builds. This uses the Groovy language to make 
+    it easier to describe a build. Each build script of Gradle is encoded using UTF-8, saved offline and named as build.gradle.
+
+    $  gradle –q hello
+
+If you think task works similar to ANT’s target, then that’s right − Gradle task is equivalent to ANT target.
+
+The Grade script mainly used two real Objects
+    Project Object − Each script describes about one or multiple projects. 
+        While in the execution this scripts configures the Project Object. 
+        You can call some methods and use property in your build script which are delegated to the Project Object.
+
+    Script Object − Gradle taken script code into classes which implements Script Interface and then executes. 
+        This means that of all the properties and methods declared by the script interface are available in your script.
+
+    
+    Sr. No.	        Name	        Type	        Default Value
+        1	        project	        Project	        The Project instance
+        2	        name	        String	        The name of the project directory.
+        3	        path	        String	        The absolute path of the project.
+        4	        description	    String	        A description for the project.
+        5	        projectDir	    File	        The directory containing the build script.
+        6	        buildDir	    File	        projectDir/build
+        7	        group	        Object	        Unspecified
+        8	        version	        Object	        Unspecified
+        9	        ant	            AntBuilder	    An AntBuilder instance
+
+Groovy Basics
+    Groovy adds lots of useful methods to the standard Java classes. For example, Iterable API from JDK implements an each() 
+        method which iterates over the elements of the Iterable Interface.
+
+Property Accessors
+    You can automatically accesses appropriate getter and setter methods of a particular property by specifying its reference.
+        // Using a getter method
+        println project.buildDir
+        println getProject().getBuildDir()
+
+        // Using a setter method
+        project.buildDir = 'target'
+        getProject().setBuildDir('target')
+
+Optional Parentheses on Method Calls
+        test.systemProperty 'some.prop', 'value'
+        test.systemProperty('some.prop', 'value')
+
+Closure as the Last Parameter of the Method
+    Gradle DSL uses closures in many places. Where the last parameter of a method is a closure, you can place the closure after the method call.
+        repositories {
+            println "in a closure"
+        }
+        repositories() { 
+            println "in a closure" 
+        }
+        repositories({ println "in a closure" })        
+
+Default Imports
+    

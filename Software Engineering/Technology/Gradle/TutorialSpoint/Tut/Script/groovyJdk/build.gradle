@@ -1,0 +1,8 @@
+task groovyJdk{
+    doLast{
+        String myName = "Chung"
+        myName.each(){
+            println "$it"
+        }
+    }
+}

@@ -1,0 +1,109 @@
+This chapter covers
+■ Groovy’s approach to typing 
+■ Operators as method implementations 
+■ Strings, regular expressions, and numbers 
+
+Before we go into details, we’ll talk about Groovy’s general approach to typing.
+    With this in mind, you can appreciate Groovy’s approach of treating everything as
+    an object and all operators as method calls.
+
+3.1 Objects, objects everywhere 
+    In Groovy, everything is an object. It is, after all, an object-oriented language. 
+    
+    3.1.1 Java’s type system: primitives and references 
+    
+    3.1.2 Groovy’s answer: everything’s an object
+        When Groovy needs to store values that would have used Java’s primitive types, Groovy uses the wrapper classes already
+            provided by the Java platform. 
+        
+         Notice also how BigDecimal is the default type of noninteger literals. BigDecimal will be used
+            unless you specify a suffix to force the literal to be a Float or a Double.
+
+    3.1.3 Interoperating with Java: automatic boxing and unboxing 
+
+    3.1.4 No intermediate unboxing 
+
+3.2 The concept of optional typing 
+    3.2.1 Assigning types
+        The def keyword is used to indicate that no particular type is specified
+        Unlike untyped languages, Groovy doesn’t allow you to treat an object of one type as an instance 
+            of a different type without a welldefined conversion being available.
+    3.2.2 Dynamic Groovy is type safe
+        Groovy enforces the Java type system! But it only does so at runtime where Java does so 
+            with a mixture of compile-time and runtime checks.
+        
+        
+        Integer myInt = new Object()
+        println myInt
+        => org.codehaus.groovy.runtime.typehandling.GroovyCastException: 
+            Cannot cast object 'java.lang.Object@5b0bc6' 
+            with class 'java.lang.Object' to class 'java.lang.Integer' 
+
+        def myInt = returnsObject() 
+        =>  you’d cast to Object because that’s assumed when def is used. But this can never
+            have any effect because every object is at least of type Object and Groovy optimizes
+            the cast away. 
+
+        def printNext(Integer myInt) { 
+            println(++myInt) 
+        }
+        => There’s no possible way that this method could ever be called with an argument that
+            isn’t of type Integer! Even though the compiler accepts code like printNext(new
+            Object()), this will never result in calling the previous method. And now to a common misconception.
+
+    3.2.3 Let the casting work for you
+        Example: Casting.groovy
+    
+    3.2.4 The case for optional typing 
+        RULE OF THUMB: Experienced Groovy programmers tend to follow this rule of
+            thumb: as soon as you think about the type of a reference, declare it; if you’re
+            thinking of it as “just an object,” leave the type out.
+
+3.3 Overriding operators 
+    3.3.1 Overview of overridable operators 
+        Table 3.4 Method-based operators
+            Operator        Name        Method              Works with 
+            a + b           Plus        a.plus(b)       Number, String, StringBuffer, Collection, Map, Date, Duration
+            a – b           Minus       a.minus(b)      Number, String, List, Set, Date, Duration
+            a * b           Star        a.multiply(b)   Number, String, Collection
+            a / b           Divide      a.div(b)        Number 
+            a % b           Modulo      a.mod(b)        Integral number 
+            ...
+
+    3.3.2 Overridden operators in action
+        Example: Overriding.groovy 
+
+    3.3.3 Making coercion work for you 
+        Things get more complex with a mixture of types, say 
+            1 + 1.0 
+            This adds an Integer and a BigDecimal. What is the return type?
+            One of the two arguments needs to be promoted to the more general type. 
+            This is called coercion. 
+        
+            SUPPORTED ARGUMENT TYPES
+                You need to decide which argument types and values will be allowed. 
+
+            PROMOTING MORE SPECIFIC ARGUMENT
+
+            HANDLING MORE GENERAL ARGUMENTS WITH DOUBLE DISPATCH
+
+        GROOVY’S CONVENTIONAL BEHAVIOR
+
+3.4 Working with strings 
+    Groovy strings come in two flavors: plain strings( java.lang.String) and GStrings( groovy.lang.GString.).
+        GStrings allow placeholder expressions to be resolved and evaluated at runtime.
+    3.4.1 Varieties of string literals 
+        Java allows only one way of specifying string literals: placing text in quotes “like this.”
+        Table 3.6 Escaped characters as known to Groovy
+            Escaped special character       Meaning 
+                \b                          Backspace 
+                \t                          Tab 
+                \r                          Carriage return 
+                \n                          Linefeed 
+                \f                          Form feed 
+                \\                          Backslash 
+                \$                          Dollar sign 
+                \uabcd                      Unicode character u + abcd (where a, b, c, and d are hex digits)
+                \abc                        Unicode character u + abc (where a, b, and c are octal digits, and b and c are optional) 
+                \'                          Single quote 
+                \"                          Double quote 

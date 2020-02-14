@@ -1,0 +1,83 @@
+Gradle build script describes about one or more Projects. Each project is made up of different tasks. 
+A task is a piece of work which a build performs. The task might be compiling some classes, storing class files into separate target folder, 
+    creating JAR, generating Javadoc, or publishing some achieves to a repositories.
+
+Defining Tasks
+    Task is a keyword which is used to define a task into build script.
+        task hello {
+            doLast {
+                println 'tutorialspoint'
+            }
+        }
+
+        task (hello) {
+            doLast {
+                println 'tutorialspoint'
+            }
+        }
+
+        task ('hello') {
+            doLast {
+                println 'tutorialspoint'
+            }
+        }
+
+        tasks.create(name: 'hello'){
+            doLast{
+                println "hello gradle"
+            }
+        }
+
+Locating Tasks
+    If you want to locate tasks that you defined in the build file, then you have to use respective standard project properties. 
+    That means each task is available as a property of the project, using the task name as the property name.
+        task hello
+
+        println hello.name
+        println project.hello.name
+
+    Use all the properties through the tasks collection
+        println tasks.hello.name
+        println tasks['hello'].name
+
+    Access the task's path using the tasks. For this you can call the getByPath() method with a task name, or a relative path, or an absolute path.
+        project(':projectA') {
+            task hello
+        }
+        task hello
+
+        println tasks.getByPath('hello').path
+        println tasks.getByPath(':hello').path
+        println tasks.getByPath('projectA:hello').path
+        println tasks.getByPath(':projectA:hello').path
+
+Adding Dependencies to Tasks
+    You can make a task is dependent on another task that means when one task is done then only other task will start.
+    Each task is differentiate with the task name. Collection of task names is referred by its tasks collection.
+    To refer to a task in another project, you should use path of the project as a prefix to the respective task name.
+        task taskX {
+            doLast{
+                println 'taskX'
+            } 
+        }
+        task taskY(dependsOn: 'taskX') {
+            doLast{
+                println "taskY"
+            }
+        }
+
+
+Adding a Description to a Task
+    You can add a description to your task. This description is displayed when executing Gradle tasks. 
+    This is possible by using the description keyword.
+
+Skipping Tasks
+    Skipping tasks can be done by passing a predicate closure. 
+    This is possible only if method of a task or a closure throwing a StopExecutionException before the actual work of a task is executed.
+
+Task Structure
+    Gradle has different phases, when working with tasks. 
+    First of all, there is a configuration phase, where the code, which is specified directly in a task's closure, is executed. 
+    The configuration block is executed for every available task and not only for those tasks which are later actually executed.
+
+    After the configuration phase, the execution phase runs the code inside the doFirst or doLast closures of those tasks, which are actually executed.

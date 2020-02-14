@@ -1,0 +1,61 @@
+// C1: adding dependency on task by using its names
+
+// task taskX {
+//     doLast{
+//         println 'taskX'
+//     } 
+// }
+
+// task taskY(dependsOn: 'taskX') {
+//     doLast{
+//         println "taskY"
+//     }
+// }
+
+
+// C2: is define the dependency using a Task object.
+// task taskX {
+//     doLast{
+//         println 'taskX'
+//     } 
+// }
+
+// task taskY {
+//     doLast{
+//         println 'taskY'
+//     } 
+// }
+
+// taskY.dependsOn taskX
+
+
+// C3: is define the dependency using a task references names.
+task taskX {
+    doLast{
+        println 'taskX'
+    } 
+}
+
+taskX.dependsOn {
+    tasks.findAll{
+        task -> task.name.startsWith('lib')
+    }
+}
+
+task lib1 {
+    doLast{
+        println "lib1"
+    }
+}
+
+task lib2{
+    doLast{
+        println "lib2"
+    }
+}
+
+task notALib{
+    doLast{
+        println "notALib"
+    }
+}
