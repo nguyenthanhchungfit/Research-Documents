@@ -1,0 +1,51 @@
+Plugin is nothing but set of tasks, almost all useful tasks such as compiling tasks, setting domain objects, setting up source files, etc are handled by plugins. 
+Applying a plugin to a project means that allows the plugin to extend the project’s capabilities. The plugins can do the things such as −
+    Extend the basic Gradle model (e.g. add new DSL elements that can be configured).
+    Configure the project according to conversions (e.g. add new tasks or configure sensible defaults).
+    Apply specific configuration (e.g. add organizational repositories or enforce standards).
+
+* Types of Plugins
+    There are two types of plugins in Gradle:
+    + script plugins:
+        Script plugins is an additional build script that gives a declarative approach to manipulating the build.
+        This is typically used within a build.
+    + binary plugins:
+        Binary plugins are the classes that implement the plugin interface and adopt a programmatic approach to manipulating the build.
+        Binary plugins can reside with a build script, with the project hierarchy or externally in a plugin JAR.
+    
+* Applying Plugins
+    Project.apply()
+        API method is used to apply the particular plugin.
+        Can use the same plugin for multiple times.
+
+    * Script Plugins:
+        Script plugins can be applied from a script on the local filesystem or at a remote location.
+        Example:
+            apply from: 'other.gradle'
+
+    * Binary Plugins:
+        Each plugin is identified by plugin id in those some core plugins are using short names to apply it and some Community plugins are using fully 
+            qualified name for plugin id. Some time it allows to specify class of plugin.
+        Examples:
+            apply plugin: JavaPlugin
+
+            plugins {
+                id 'java'
+            }
+
+            plugins {
+                id "com.jfrog.bintray" version "0.4.1"
+            }
+        
+* Writing Custom Plugins
+    While creating a custom plugin, you need to write an implementation of plugin. Gradle instantiates the plugin and calls the plugin instance using 
+        Plugin.apply() method
+
+* Getting Input from the Build
+    Most of the plugins need the configuration support from the build script. The Gradle project has an 
+        associated ExtensionContainer object that helps to track all the setting and properties being passed to plugins.
+
+* Standard Gradle Plugins
+
+* Incubating Language Plugins
+    

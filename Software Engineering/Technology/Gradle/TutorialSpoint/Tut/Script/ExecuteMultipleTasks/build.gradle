@@ -1,0 +1,26 @@
+task task1 {
+    doLast{
+         println 'compiling source'
+    }
+  
+}
+
+
+task task2(dependsOn: task1) {
+    doLast{
+        println 'compiling unit tests'
+    }
+}
+
+task task3(dependsOn: [task1, task2]) {
+    doLast{
+        println 'running unit tests'
+    }
+}
+
+task task4(dependsOn: [task1, task3]) {
+    doLast{
+        println 'building the distribution'
+    }
+   
+}

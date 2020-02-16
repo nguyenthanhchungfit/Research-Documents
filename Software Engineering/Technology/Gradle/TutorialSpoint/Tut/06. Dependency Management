@@ -1,0 +1,111 @@
+Gradle build script defines a process to build projects; 
+    each project contains some dependencies and some publications.
+    Dependencies means the things that support to build your project such as required JAR file.
+    Publications means the outcomes of the project, such as test class files and build files, like war files.
+
+Gradle take care of building and publishing the outcomes somewhere.
+    Publishing is based on task that you define. It might want to copy the files 
+    to local directory, or upload them to a remote Maven or lvy repository or 
+    you might use the files from another project in the same multi-project build.
+
+We can call the process of publishing a task is publication.
+
+
+* Declaring Your Dependencies
+    Dependency configuration is nothing but defines set of dependences. You can use this feature to declare external dependences means 
+        which you want to download from the web.
+
+    Examples:
+        apply plugin: 'java'
+
+        repositories {
+            mavenCentral()
+        }
+
+        dependencies {
+            compile group: 'org.hibernate', name: 'hibernate-core', version: '3.6.7.Final'
+            testCompile group: 'junit', name: 'junit', version: '4.+'
+        } 
+
+* Dependency Configurations
+    Compile − The dependencies required to compile the production source of the project.
+
+    Runtime − The dependencies required by the production classes at runtime. By default, also includes the compile time dependencies.
+
+    Test Compile − The dependencies required to compile the test source of the project. By default, it includes compiled production classes and the compile time dependencies.
+
+    Test Runtime − The dependencies required to run the tests. By default, it includes runtime and test compile dependencies.
+
+
+Gradle - Dependency Management
+Advertisements
+
+
+ Previous PageNext Page  
+Gradle build script defines a process to build projects; each project contains some dependencies and some publications. Dependencies means the things that support to build your project such as required JAR file from other projects and external JARs like JDBC JAR or Eh-cache JAR in the class path. Publications means the outcomes of the project, such as test class files and build files, like war files.
+
+All most all the projects are not self-contained. They need files build by other projects to compile and test the source files. For example, in order to use Hibernate in the project, you need to include some Hibernate JARs in the classpath. Gradle uses some special script to define the dependencies, which needs to be downloaded.
+
+Gradle take care of building and publishing the outcomes somewhere. Publishing is based on task that you define. It might want to copy the files to local directory, or upload them to a remote Maven or lvy repository or you might use the files from another project in the same multi-project build. We can call the process of publishing a task is publication.
+
+Declaring Your Dependencies
+Dependency configuration is nothing but defines set of dependences. You can use this feature to declare external dependences means which you want to download from the web. This defines different standers such as follows.
+
+apply plugin: 'java'
+
+repositories {
+   mavenCentral()
+}
+
+dependencies {
+   compile group: 'org.hibernate', name: 'hibernate-core', version: '3.6.7.Final'
+   testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+Dependency Configurations
+Dependency configuration is nothing but defines a set of dependencies. You can use this feature to declare external dependencies, which you want to download from the web. This defines the following different standard configurations.
+
+    Compile − The dependencies required to compile the production source of the project.
+
+    Runtime − The dependencies required by the production classes at runtime. By default, also includes the compile time dependencies.
+
+    Test Compile − The dependencies required to compile the test source of the project. By default, it includes compiled production classes and the compile time dependencies.
+
+    Test Runtime − The dependencies required to run the tests. By default, it includes runtime and test compile dependencies.
+
+* External Dependencies
+    External dependencies are the one of the type of dependencies. 
+    This is a dependency on some files built outside on the current build, 
+        and stored in a repository of some kind, such as Maven central, 
+        or a corporate Maven or lvy repository, or a directory I the local file system.
+        Examples:
+            dependencies {
+                compile group: 'org.hibernate', name: 'hibernate-core', version: '3.6.7.Final'
+            }
+    
+* Repositories
+    While adding external dependencies. Gradle looks for them in a repository. A repository is just a collection of files, organized by group, name and version. 
+        By default, Gradle does not define any repositories. 
+        We have to define at least one repository explicitly.
+        Examples:
+            repositories {
+                mavenCentral()
+            }
+
+            repositories {
+                maven {
+                    url "http://repo.mycompany.com/maven2"
+                }
+            }
+* Publishing Artifacts
+    Dependency configurations are also used to publish files. These published files are called artifacts.
+    Usually, we use plug-ins to define artifacts. However, you do need to tell Gradle where to publish the artifacts
+    Example:
+        apply plugin: 'maven'
+
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    repository(url: "file://localhost/tmp/myRepo/")
+                }
+            }
+        }

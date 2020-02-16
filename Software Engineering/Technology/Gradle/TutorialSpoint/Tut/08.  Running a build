@@ -1,0 +1,13 @@
+Gradle provides a command line to execute build script. 
+It can execute more than one task at a time.
+
+* Executing Multiple Tasks
+    You can execute multiple tasks from a single build file. Gradle can handle that build file using gradle command.
+    This command will compile each task in the order that they are listed and execute each task along with the dependencies using different options.
+
+* Excluding Tasks
+    While excluding a task from the execution you can use –x option along with the gradle command and mention the name of the task, 
+    which you want to exclude.
+
+* Continuing the Build When a Failure Occurs
+    
