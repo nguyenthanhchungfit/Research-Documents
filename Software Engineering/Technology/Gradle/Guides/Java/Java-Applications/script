@@ -1,0 +1,47 @@
+Review the generated project files
+
+* The settings.gradle file is heavily commented, but has only one active line:
+    rootProject.name = 'demo'
+    This sets the name of the root project to "demo", which overrides the default behavior of naming the project after the directory it’s in.
+
+* The generated build.gradle file also has many comments
+    plugins {
+        id 'java'
+        id 'application'
+    }
+
+    repositories {
+        jcenter()  (1)
+    }
+
+    dependencies {
+        implementation 'com.google.guava:guava:26.0-jre'  (2)
+
+        testImplementation 'junit:junit:4.12'  (3)
+    }
+
+    mainClassName = 'demo.App' (4)
+    
+    => 
+        (1) public Bintray Artifactory repository.
+        (2) Google Guava library
+        (3) JUnit testing library
+        (4) Class with "main" method (used by Application plugin)
+
+    The build file adds the java and application plugins. 
+    Main Class Called by Application plugin "run" task
+
+* Build 
+    $ ./gradlew build
+    The first time you run the wrapper script, gradlew, 
+    there may be a delay while that version of gradle is downloaded and stored locally in your ~/.gradle/wrapper/dists folder.
+
+    The first time you run the build, Gradle will check whether or not you already have the Guava and JUnit libraries in your cache under your ~/.gradle directory. 
+        If not, the libraries will be downloaded and stored there. The next time you run the build, the cached versions will be used. 
+        The build task compiles the classes, runs the tests, and generates a test report.
+    
+    $ ./gradles tasks
+    
+
+
+    

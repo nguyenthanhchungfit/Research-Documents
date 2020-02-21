@@ -1,0 +1,68 @@
+First of all we have to add java plugin to the build script because 
+    it provides tasks to compile Java source code, run unit tests, create Javadoc and create a JAR file.    
+    apply plugin: 'java'
+
+* Java Default Project Layout
+    When ever you add a plugin to your build it assume a certain setup of your Java project 
+        (similar to Maven). take a look into the following directory structre.
+        + src/main/java contains the Java source code
+        + src/test/java contains the Java tests
+
+    To start the build: gradle build
+        SourceSets can be used to specify a different project structure. For example, the sources are stored in a src folder rather than in src/main/java.
+            apply plugin: 'java'
+            sourceSets {
+                main {
+                    java {
+                        srcDir 'src'
+                    }
+                }
+	
+                test {
+                    java {
+                        srcDir 'test'
+                    }
+                }
+            }
+
+* init Task Execution
+    Gradle does not yet support multiple project templates. But it offers an init task to create the structure of a new Gradle project. 
+    Without additional parameters, this task creates a Gradle project,
+        which contains the gradle wrapper files, a build.gradle and settings.gradle file.
+    
+    When adding the --type parameter with java-library as value, a java project structure is created and the build.gradle file contains a certain Java template with Junit. 
+    Take a look at the following code for build.gradle file.
+        apply plugin: 'java'
+
+        repositories {
+            jcenter()
+        }
+
+        dependencies {
+            compile 'org.slf4j:slf4j-api:1.7.12'
+            testCompile 'junit:junit:4.12'
+        }
+
+        => In the repositories section, it defines where to find the dependencies. 
+            Jcenter is for resolving your dependencies. Dependencies section is for providing information about external dependencies.
+        
+* Specifying Java Version
+    Usually, a Java project has a version and a target JRE on which it is compiled. The version and sourceCompatibility property can be set in the build.gradle file.
+        version = 0.1.0
+        sourceCompatibility = 1.8
+    
+    If the artifact is an executable Java application, the MANIFEST.MF file must be aware of the class with the main method.
+        apply plugin: 'java'
+
+        jar {
+            manifest {
+                attributes 'Main-Class': 'com.example.main.Application'
+            }
+        }
+    
+
+    $ gradle tasks
+    $ gradle assemble
+    $ gradle build
+
+

@@ -1,0 +1,11 @@
+It is possible to run any task in any sub-project from the top (or any other subproject), by using the format :SUBPROJECT:TASK as the task name. 
+This removes the need to do the following alternative (which also works):
+
+If you were to spend a lot of time working in one sub-project, changing to that directory and running the build from there is normal. 
+    However, if you need to quickly run a task in a specific subproject, 
+    having the flexibility to specify the task by subproject path is very helpful.
+
+* Include the documentation in the distribution archive
+
+* Refactor common build script code
+    

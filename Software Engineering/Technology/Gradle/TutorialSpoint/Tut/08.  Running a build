@@ -10,4 +10,31 @@ It can execute more than one task at a time.
     which you want to exclude.
 
 * Continuing the Build When a Failure Occurs
-    
+    Gradle will abort execution and fail the build as soon as any task fails. You can continue the execution even when a failure occurs.
+        For this you have to use –continue option with the gradle command.
+    And the main important point is it will catch each encountered failure and report at the end of the execution of the build. 
+    Suppose if a task fails then the dependent subsequent tasks also will not be executed. 
+
+* Selecting Which Build to Execute
+    When you run the gradle command, it looks for a build file in the current directory. 
+    You can use the –b option to select a particular build file along with absolute path. 
+
+* Obtaining Build Information
+    Gradle provides several built-in tasks for retrieving the information details regarding the task and the project. 
+    This can be useful to understand the structure and the dependencies of your build and for debugging problems. 
+    You can use project report plugin to add tasks to your project, which will generate these reports.
+
+    * Listing Projects
+        You can list the project hierarchy of the selected project and their sub projects using gradle –q projects command.
+
+    * Listing Tasks
+        gradle -q tasks
+        gradle -q tasks --all
+
+        Sr. No.	        Command	                                            Description
+        1	        gradle –q help –task <task name>	                    Provides the usage information (such as path, type, description, group) about a specific task or multiple tasks.
+        2	        gradle –q dependencies	                                Provides a list of dependencies of the selected project.
+        3	        gradle -q api:dependencies --configuration <task name>	Provides the list of limited dependencies respective to configuration.
+        4	        gradle –q buildEnvironment	                            Provides the list of build script dependencies.
+        5	        gradle –q dependencyInsight	                            Provides an insight into a particular dependency.
+        6	        Gradle –q properties	                                Provides the list of properties of the selected project.
