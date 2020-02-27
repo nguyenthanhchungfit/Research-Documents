@@ -114,4 +114,84 @@ This chapter will introduce the following commands:
                 The top program accepts a number of keyboard commands. The two most interesting are h, which displays the program's' help screen, and q, which quits top.
 
 * Controlling Processes
+    * Interrupting A Process
+        In a terminal, pressing Ctrl-c, interrupts a program. This means that we politely asked the program to terminate.
+            Many (but not all) command-line programs can be interrupted by using this technique. 
+        
+    * Putting A Process In The Background
+        Let's' say we wanted to get the shell prompt back without terminating the xlogo program.
+        => We’ll do this by placing the program in the background.
+        Think of the terminal as having a foreground  (with stuff visible on the surface like the shell prompt) 
+            and a background (with hidden stuff behind the surface.) 
+        To launch a program so that it is immediately placed in the background, we follow the command with an- “&” character
+        $ xlogo &
+         => [1] 5958 : job control, we have started job number 1(“[1]”) and that it has PID 5958. 
+        $ jobs => view list job
+
+    * Returning A Process To The Foreground
+        A process in the background is immune from keyboard input, including any attempt interrupt it with a Ctrl-c.
+        To return a process to the foreground, use the fg command
+            $ fg %1 <= $fg <%<job number>>
+            K: Ctrl C
     
+    * Stopping (Pausing) A Process
+        Sometimes we'll' want to stop a process without terminating it. This is often done to allow
+            a foreground process to be moved to the background.
+        To stop a foreground process, press Ctrl-z
+        We can either restore the program to the foreground, using the fg command, 
+            or move the program to the background with the bg command
+            $ bg %1 
+            or 
+            $ fg  ( the jobspec is optional if there is only one job)
+        Why would you want to launch a graphical program from the command line? There are two reasons:
+            First, the program you wish to run might not be listed on the window manager's' menus (such as xlogo). 
+            Secondly, by launching a program from the command line, you might be able to see error messages that would 
+                otherwise be invisible if the program were launched graphically.
+            
+* Signals
+    The kill command is used to “kill” processes.
+        $ kill <pid> | $ kill <job number>
+    The kill command doesn't' exactly “kill” processes, rather it sends them signals.
+    Signals are one of several ways that the operating system communicates with programs.
+    When the terminal receives one of these keystrokes, it sends a signal to the program in the foreground. 
+        In the case of Ctrl-c, a signal called INT (Interrupt) is sent; with Ctrl-z, a signal called TSTP (Terminal Stop).
+    
+    * Sending Signals To Processes With kill
+        $ kill [-signal] PID
+        If no signal is specified on the command line, then the TERM (Terminate) signal is sent by default.
+
+        Table 10-4: Common Signals
+            Number      Name        Meaning
+            1           HUP         Hangup. This is a vestige of the good old days when terminals were attached to remote computers with 
+                                        phone lines and modems. The signal is used to indicate to programs that the controlling terminal 
+                                        has “hung up.” The effect of this signal can be demonstrated by closing a terminal session. 
+                                        The foreground program running on the terminal will be sent the signal and will terminate.
+                                        This signal is also used by many daemon programs to cause a reinitialization. This means 
+                                        that when a daemon is sent this signal, it will restart and re-read its configuration file. 
+                                        The Apache web server is an example of a daemon that uses the HUP signal in this way.
+2 INT Interrupt. Performs the same function as the 
+Ctrl-c key sent from the terminal. It will 
+usually terminate a program.
+9 KILL Kill. This signal is special. Whereas programs 
+may choose to handle signals sent to them in 
+different ways, including ignoring them all 
+together, the KILL signal is never actually sent to
+the target program. Rather, the kernel
+immediately terminates the process. When a 
+process is terminated in this manner, it is given no
+opportunity to “clean up” after itself or save its 
+work. For this reason, the KILL signal should 
+only be used as a last resort when other 
+termination signals fail.
+15 TERM Terminate. This is the default signal sent by the 
+kill command. If a program is still “alive” 
+enough to receive signals, it will terminate.
+18 CONT Continue. This will restore a process after a STOP
+signal.
+19 STOP Stop. This signal causes a process to pause 
+without terminating. Like the KILL signal, it is 
+not sent to the target process, and thus it cannot be
+ignored.
+
+
+        
