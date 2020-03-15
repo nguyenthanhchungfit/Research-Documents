@@ -169,29 +169,56 @@ This chapter will introduce the following commands:
                                         This signal is also used by many daemon programs to cause a reinitialization. This means 
                                         that when a daemon is sent this signal, it will restart and re-read its configuration file. 
                                         The Apache web server is an example of a daemon that uses the HUP signal in this way.
-2 INT Interrupt. Performs the same function as the 
-Ctrl-c key sent from the terminal. It will 
-usually terminate a program.
-9 KILL Kill. This signal is special. Whereas programs 
-may choose to handle signals sent to them in 
-different ways, including ignoring them all 
-together, the KILL signal is never actually sent to
-the target program. Rather, the kernel
-immediately terminates the process. When a 
-process is terminated in this manner, it is given no
-opportunity to “clean up” after itself or save its 
-work. For this reason, the KILL signal should 
-only be used as a last resort when other 
-termination signals fail.
-15 TERM Terminate. This is the default signal sent by the 
-kill command. If a program is still “alive” 
-enough to receive signals, it will terminate.
-18 CONT Continue. This will restore a process after a STOP
-signal.
-19 STOP Stop. This signal causes a process to pause 
-without terminating. Like the KILL signal, it is 
-not sent to the target process, and thus it cannot be
-ignored.
+            2           INT         Interrupt. Performs the same function as the Ctrl-c key sent from the terminal. It will 
+                                        usually terminate a program.
+            9           KILL        Kill. This signal is special. Whereas programs may choose to handle signals sent to them in 
+                                        different ways, including ignoring them all together, the KILL signal is never actually sent to
+                                        the target program. Rather, the kernel immediately terminates the process. When a process is terminated in this manner, 
+                                        it is given no opportunity to “clean up” after itself or save its work. For this reason, the KILL signal should only be used as 
+                                        a last resort when other termination signals fail.
+            15          TERM        Terminate. This is the default signal sent by the kill command. If a program is still “alive” 
+                                        enough to receive signals, it will terminate.
+            18          CONT        Continue. This will restore a process after a STOP signal.
+            19          STOP        Stop. This signal causes a process to pause without terminating. Like the KILL signal, it is 
+                                        not sent to the target process, and thus it cannot be ignored.
 
+        $ kill -2 1235
+        $ kill -INT 1235
+        $ kill -SIGINT 1235
 
+        Processes, like files, have owners, and you must be the owner of a process (or the superuser) in order to send it 
+            signals with kill. 
         
+        Table 10-5: Other Common Signals
+            Number      Name        Meaning
+            3           QUIT        Quit.
+            11          SEGV        Segmentation Violation. This signal is sent if a program makes illegal use of memory, that is, it 
+                                        tried to write somewhere it was not allowed to.
+            20          TSTP        Terminal Stop. This is the signal sent by the terminal when the Ctrl-z key is pressed. Unlike
+                                        the STOP signal, the TSTP signal is received by the program but the program may choose to 
+                                        ignore it.
+            28          WINCH       Window Change. This is a signal sent by the system when a window changes size. Some 
+                                        programs , like top and less will respond to this signal by redrawing themselves to fit the new 
+                                        window dimensions.
+
+        $ kill -l => view full signals. 
+
+    * Sending Signals To Multiple Processes With killall
+        It's' also possible to send signals to multiple processes matching a specified program or
+            username by using the killall command.
+        $ killall [-u user] [-signal] name...
+        $ killall xlogo
+
+* More Process Related Command 
+    Since monitoring processes is an important system administration task, there are a lot of
+        commands for it. Here are some to play with:
+        Table 10-6: Other Process Related Commands
+            Command     Description
+            pstree      Outputs a process list arranged in a tree-like pattern showing the 
+                            parent/child relationships between processes.
+            vmstat      Outputs a snapshot of system resource usage including, memory, 
+                            swap and disk I/O. To see a continuous display, follow the 
+                            command with a time delay (in seconds) for updates. 
+                            For example: $ vmstat 5. Terminate the output with Ctrl-c.
+            xload       A graphical program that draws a graph showing system load over time.
+            tload       Similar to the xload program, but draws the graph in the terminal. Terminate the output with Ctrl-C
